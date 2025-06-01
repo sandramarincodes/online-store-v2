@@ -43,7 +43,7 @@ function renderProduct(product) {
     buttonClass = "btn-buy";
   }
 
-  return `<li><div class="product-card"><img src="${imgURL}" style="width: 200px;"/>
+  return `<li><div class="product-card"><img src="${imgURL}"/>
     <p>${product.title}</p><p class="product-price">${product.price} €</p>
     <button class="js_btn-store ${buttonClass}" id="${product.id}">${buttonText}</button></div></li>`;
 }
@@ -75,6 +75,7 @@ function renderShoppingCartProduct(product) {
 
 function renderAllShoppingCartProducts(productList) {
   ulShopping.innerHTML = "";
+
   for (const product of productList) {
     ulShopping.innerHTML += renderShoppingCartProduct(product);
   }
