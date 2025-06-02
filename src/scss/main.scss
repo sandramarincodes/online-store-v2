@@ -110,6 +110,20 @@ body {
   gap: 8px;
 }
 
+.shopping-cart-ul li p {
+  text-align: center;
+  max-width: 200px;
+  word-wrap: break-word;
+  margin-bottom: 4px;
+  font-size: 1rem;
+}
+
+.shopping-cart-ul .product-price {
+  margin-top: 10px;
+  font-weight: 500;
+  text-align: center;
+}
+
 .shopping-cart-ul li:last-child {
   border-bottom: none;
 }
@@ -190,10 +204,13 @@ body {
   max-width: 200px;
   word-wrap: break-word;
   margin-bottom: 4px;
+  font-size: 1rem;
 }
 
 .product-price {
-  margin: 4px 0 0 0;
+  margin-top: 10px;
+  font-weight: 500;
+  text-align: center;
 }
 
 .cart-img {
@@ -203,10 +220,10 @@ body {
   margin-bottom: 8px;
 }
 
-.btn-buy {
+.btn-buy,
+.btn-delete,
+.js_clear-cart {
   display: inline-block;
-  background-color: #5747ae;
-  color: white;
   font-weight: 500;
   padding: 10px 16px;
   border-radius: 8px;
@@ -221,56 +238,24 @@ body {
   letter-spacing: 0.2px;
   margin-top: auto;
   align-self: stretch;
+}
+
+.btn-buy {
+  background-color: #5747ae;
+  color: white;
 }
 
 .btn-buy:hover {
   background-color: #463896;
 }
 
-.btn-delete {
-  display: inline-block;
-  background-color: #ae4747;
-  color: white;
-  font-weight: 500;
-  padding: 10px 16px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  text-align: center;
-  width: 100%;
-  max-width: 300px;
-  font-size: 1rem;
-  font-family: "Inter", sans-serif;
-  letter-spacing: 0.2px;
-  margin-top: auto;
-  align-self: stretch;
-}
-
-.btn-delete:hover {
-  background-color: #933737;
-}
-
+.btn-delete,
 .js_clear-cart {
-  display: inline-block;
   background-color: #ae4747;
   color: white;
-  font-weight: 500;
-  padding: 10px 16px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  text-align: center;
-  width: 100%;
-  max-width: 300px;
-  font-size: 1rem;
-  font-family: "Inter", sans-serif;
-  letter-spacing: 0.2px;
-  margin-top: auto;
-  align-self: stretch;
 }
 
+.btn-delete:hover,
 .js_clear-cart:hover {
   background-color: #933737;
 }
