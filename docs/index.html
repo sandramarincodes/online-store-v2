@@ -5,44 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Online Store</title>
     <link
-      href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
     
     <link rel="icon" href="./images/favicon.png" />
-    <link rel="stylesheet" href="./assets/main-ed2c4584.css">
+    <link rel="stylesheet" href="./assets/index-2378e94b.css">
   </head>
 
   <body>
-    <header>
-      <h1>Online Store</h1>
-      <form class="form-search">
+    <header class="header">
+      <div class="logo">🛍️ Shoppia</div>
+      <form class="form-search search-container">
         <input
           class="js_input-search input-search"
           type="text"
-          placeholder="Example: Women"
+          placeholder="Search products"
         />
-        <button class="js_btn-search">Find</button>
+        <button class="js_btn-search search-btn" type="submit">🔍</button>
       </form>
     </header>
+
     <main>
       <section class="section-store">
         <div class="shopping-cart-section">
           <h2 class="shopping-cart-title">Shopping Cart 🛒</h2>
           <ul class="js_shopping-cart shopping-cart-ul"></ul>
+          <div class="empty-cart-message">
+            <p>Your cart is empty</p>
+          </div>
         </div>
 
-        <div class="products-section">
+        <div class="products-section" id="products">
           <h2>Most popular products</h2>
-          <ul class="js_list list">
-           
-          </ul>
+          <ul class="js_list list"></ul>
         </div>
       </section>
     </main>
 
-    <footer><p>Online Store © Adalab 2025</p></footer>
-
+    <footer><p>Shoppia © 2025</p></footer>
     <script src="./js/main.js"></script>
   </body>
 </html>

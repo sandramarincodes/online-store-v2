@@ -6,6 +6,7 @@
 
 body {
   font-family: "Inter", sans-serif;
+  background-color: #f9f9fc;
 }
 
 .header {
@@ -161,6 +162,28 @@ body {
 
 .shopping-cart-ul:empty {
   display: none;
+}
+
+.empty-cart-message {
+  display: none;
+  background-color: #f4f4f4;
+  border-radius: 10px;
+  border: 1px dashed #ccc;
+  font-size: 1rem;
+  color: #555;
+  font-weight: 500;
+  min-height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 10px;
+  margin-top: 20px;
+}
+
+/* Solo visible si el carrito está vacío */
+.shopping-cart-ul:empty + .empty-cart-message {
+  display: flex;
 }
 
 .list {

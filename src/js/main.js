@@ -11,43 +11,35 @@ const ulList = document.querySelector(".js_list");
 const inputSearch = document.querySelector(".js_input-search");
 const btnSearch = document.querySelector(".js_btn-search");
 const ulShopping = document.querySelector(".js_shopping-cart");
+const emptyMessage = document.querySelector(".empty-cart-message");
 
-// SECCIÓN DE FUNCIONES
-
-function renderProduct(product) {
-  let imgURL;
-  if (product.image === "") {
-    imgURL = "https://placehold.co/600x400";
+// FUNCIONALIDAD: Mostrar u ocultar el mensaje del carrito vacío
+function toggleEmptyCartMessage() {
+  if (shoppingCart.length === 0) {
+    emptyMessage.style.display = "flex";
   } else {
-    imgURL = product.image;
+    emptyMessage.style.display = "none";
   }
-
-  let isOnCart = false;
-  for (const item of shoppingCart) {
-    if (item.id === product.id) {
-      isOnCart = true;
-    }
-  }
-
-  let buttonText;
-  if (isOnCart) {
-    buttonText = "Delete";
-  } else {
-    buttonText = "Buy";
-  }
-
-  let buttonClass;
-  if (isOnCart) {
-    buttonClass = "btn-delete";
-  } else {
-    buttonClass = "btn-buy";
-  }
-
-  return `<li><div class="product-card"><img src="${imgURL}"/>
-    <p>${product.title}</p><p class="product-price">${product.price} €</p>
-    <button class="js_btn-store ${buttonClass}" id="${product.id}">${buttonText}</button></div></li>`;
 }
 
+// Función para renderizar un producto
+function renderProduct(product) {
+  let imgURL = product.image || "https://placehold.co/600x400";
+
+  const isOnCart = shoppingCart.some(item => item.id === product.id);
+
+  const buttonText = isOnCart ? "Delete" : "Buy";
+  const buttonClass = isOnCart ? "btn-delete" : "btn-buy";
+
+  return `<li><div class="product-card">
+    <img src="${imgURL}" />
+    <p>${product.title}</p>
+    <p class="product-price">${product.price} €</p>
+    <button class="js_btn-store ${buttonClass}" id="${product.id}">${buttonText}</button>
+  </div></li>`;
+}
+
+// Pintar todos los productos
 function renderAllProducts(productList) {
   currentProductList = productList;
   ulList.innerHTML = "";
@@ -61,18 +53,19 @@ function renderAllProducts(productList) {
   }
 }
 
+// Pintar un producto en el carrito
 function renderShoppingCartProduct(product) {
-  let imgURL;
-  if (product.image === "") {
-    imgURL = "https://placehold.co/600x400";
-  } else {
-    imgURL = product.image;
-  }
-  return `<li><div><img class="cart-img" src="${imgURL}" style="width: 200px;"/>
-    <p>${product.title}</p><p class="product-price">${product.price} €</p><button class="js_btn-shopping" id="${product.id}">X</button>
-    </div></li>`;
+  let imgURL = product.image || "https://placehold.co/600x400";
+
+  return `<li><div>
+    <img class="cart-img" src="${imgURL}" style="width: 200px;" />
+    <p>${product.title}</p>
+    <p class="product-price">${product.price} €</p>
+    <button class="js_btn-shopping" id="${product.id}">X</button>
+  </div></li>`;
 }
 
+// Pintar todo el carrito
 function renderAllShoppingCartProducts(productList) {
   ulShopping.innerHTML = "";
 
@@ -80,12 +73,11 @@ function renderAllShoppingCartProducts(productList) {
     ulShopping.innerHTML += renderShoppingCartProduct(product);
   }
 
-  if (shoppingCart.length >= 1) {
+  if (shoppingCart.length > 0) {
     ulShopping.innerHTML += `<button class="js_clear-cart">Clear cart</button>`;
   }
 
   const buttonClear = document.querySelector(".js_clear-cart");
-
   if (buttonClear) {
     buttonClear.addEventListener("click", handleClearCart);
   }
@@ -95,32 +87,35 @@ function renderAllShoppingCartProducts(productList) {
     btn.addEventListener("click", handleDeleteFromCart);
   }
 
-  // Almacenar información en el localStorage
+  // Guardar carrito en localStorage
   localStorage.setItem("shoppingCart", JSON.stringify(shoppingCart));
+
+  // Mostrar u ocultar mensaje del carrito vacío
+  toggleEmptyCartMessage();
 }
 
+// Obtener productos de la API
 function getProducts() {
   fetch(url)
     .then((response) => response.json())
     .then((data) => {
       storeProducts = data;
 
-      // Local storage shoping cart restore
+      // Restaurar carrito desde localStorage
       if (localStorage.getItem("shoppingCart") !== null) {
         shoppingCart = JSON.parse(localStorage.getItem("shoppingCart"));
       }
 
       renderAllProducts(storeProducts);
-
       renderAllShoppingCartProducts(shoppingCart);
     });
 }
 
-// Sección de funciones de eventos
+// EVENTOS
 
 function handleSearch(event) {
   event.preventDefault();
-  let valueSearch = inputSearch.value;
+  const valueSearch = inputSearch.value;
   const filteredProducts = storeProducts.filter((product) =>
     product.title.toLowerCase().includes(valueSearch.toLowerCase())
   );
@@ -130,36 +125,37 @@ function handleSearch(event) {
 function handleAddToCart(event) {
   event.preventDefault();
   const clickedId = parseInt(event.currentTarget.id);
-  const foundProduct = storeProducts.find(
-    (product) => product.id === clickedId
-  );
-  if (!shoppingCart.find((item) => item.id === foundProduct.id)) {
+  const foundProduct = storeProducts.find(product => product.id === clickedId);
+
+  const alreadyInCart = shoppingCart.find(item => item.id === foundProduct.id);
+
+  if (!alreadyInCart) {
     shoppingCart.push(foundProduct);
   } else {
-    shoppingCart = shoppingCart.filter((item) => item.id !== foundProduct.id);
+    shoppingCart = shoppingCart.filter(item => item.id !== foundProduct.id);
   }
+
   renderAllProducts(currentProductList);
   renderAllShoppingCartProducts(shoppingCart);
 }
 
 function handleDeleteFromCart(event) {
   const deleteProductId = parseInt(event.currentTarget.id);
-  shoppingCart = shoppingCart.filter(
-    (product) => product.id !== deleteProductId
-  );
+  shoppingCart = shoppingCart.filter(product => product.id !== deleteProductId);
+
   renderAllProducts(currentProductList);
   renderAllShoppingCartProducts(shoppingCart);
 }
 
-function handleClearCart(event) {
+function handleClearCart() {
   shoppingCart = [];
   localStorage.setItem("shoppingCart", JSON.stringify(shoppingCart));
   renderAllProducts(currentProductList);
   renderAllShoppingCartProducts(shoppingCart);
 }
 
-// Sección de eventos // desde el botón // va a parte.
+// Lanzar búsqueda
 btnSearch.addEventListener("click", handleSearch);
 
-// Sección de código a ejecutar cuando carga la página
+// Iniciar todo al cargar la página
 getProducts();
