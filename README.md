@@ -10,8 +10,7 @@ To run this project locally, follow these steps:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/Adalab/modulo-2-evaluacion-final-sandramarincodes.git
-   cd modulo-2-evaluacion-final-sandramarincodes
+   git clone https://github.com/sandramarincodes/online-store-v2.git
    ```
 2. Install dependencies:
    ```bash
@@ -26,7 +25,7 @@ To run this project locally, follow these steps:
 ## Live demo
 
 Alternatively, you can view the live version of the project here:
-👉 https://beta.adalab.es/modulo-2-evaluacion-final-sandramarincodes/
+👉 https://sandramarincodes.github.io/online-store-v2/
 
 ## Technologies used
 
